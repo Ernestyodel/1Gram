@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1Gram And A Dream | V2.0</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+font-family:Inter,Arial,sans-serif;
+background:#050505;
+color:white;
+overflow-x:hidden;
+}
+#particles{position:fixed;inset:0;z-index:-1}
+.section{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;padding:30px;text-align:center}
+.hidden{display:none}
+.glass{
+background:rgba(255,255,255,.05);
+backdrop-filter:blur(12px);
+border:1px solid rgba(255,215,0,.15);
+border-radius:24px;
+padding:30px;
+max-width:900px;
+width:100%;
+}
+h1{font-size:clamp(2.5rem,7vw,5.5rem)}
+h2{font-size:clamp(2rem,5vw,3rem);color:#ffd700}
+p{max-width:800px;line-height:1.8;color:#d7d7d7}
+.btn{
+padding:16px 32px;
+border-radius:999px;
+border:none;
+cursor:pointer;
+margin:8px;
+font-weight:bold;
+}
+.gold{background:linear-gradient(135deg,#ffd700,#fff1a8)}
+.dark{background:#151515;color:#fff;border:1px solid #333}
+.hero-title{
+background:linear-gradient(135deg,#fff,#ffd700);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+}
+.card-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+width:100%;
+margin-top:25px;
+}
+.card{
+background:rgba(255,255,255,.04);
+padding:20px;
+border-radius:20px;
+border:1px solid rgba(255,215,0,.15);
+}
+a.cta{
+display:inline-block;
+text-decoration:none;
+padding:15px 30px;
+background:#ffd700;
+color:#000;
+border-radius:999px;
+font-weight:bold;
+margin:10px;
+}
+</style>
+</head>
+<body>
+
+<canvas id="particles"></canvas>
+
+<div id="gate1" class="section">
+<div class="glass">
+<h1>Are You A Dreamer?</h1>
+<p>Every empire began as an idea in someone's mind.</p>
+<button class="btn gold" onclick="show('gate2')">YES</button>
+<button class="btn dark" onclick="deny()">NO</button>
+</div>
+</div>
+
+<div id="gate2" class="section hidden">
+<div class="glass">
+<h1>Do You Believe Small Beginnings Create Great Things?</h1>
+<p>From 1 Gram to Greatness.</p>
+<button class="btn gold" onclick="show('gate3')">YES</button>
+<button class="btn dark" onclick="deny()">NO</button>
+</div>
+</div>
+
+<div id="gate3" class="section hidden">
+<div class="glass">
+<h1>What Did You Start With?</h1>
+<button class="btn gold" onclick="grant()">1 Gram</button>
+<button class="btn gold" onclick="grant()">A Dream</button>
+<button class="btn gold" onclick="grant()">Both</button>
+<button class="btn gold" onclick="grant()">Almost Nothing</button>
+</div>
+</div>
+
+<div id="loading" class="section hidden">
+<h2 id="scan">Scanning dreams...</h2>
+</div>
+
+<div id="site" class="hidden">
+
+<section class="section">
+<h1 class="hero-title">1Gram And A Dream</h1>
+<p>Started with 1 Gram. Built with a Dream.</p>
+<div>
+<a class="cta" href="#">BUY $GRAM</a>
+<a class="cta" href="#">TELEGRAM</a>
+<a class="cta" href="#">CHART</a>
+</div>
+</section>
+
+<section class="section">
+<div class="glass">
+<h2>The Dream</h2>
+<p>Most people wait for the perfect opportunity. Dreamers build from almost nothing.</p>
+</div>
+</section>
+
+<section class="section">
+<div class="glass">
+<h2>Dream Wall</h2>
+<div class="card-grid">
+<div class="card">"Started with nothing."</div>
+<div class="card">"Dreaming bigger every day."</div>
+<div class="card">"1 Gram today. Legacy tomorrow."</div>
+</div>
+</div>
+</section>
+
+<section class="section">
+<div class="glass">
+<h2>Roadmap</h2>
+<div class="card-grid">
+<div class="card"><b>Phase 1</b><br>Launch & Community</div>
+<div class="card"><b>Phase 2</b><br>Memes & Growth</div>
+<div class="card"><b>Phase 3</b><br>Global Recognition</div>
+</div>
+</div>
+</section>
+
+<section class="section">
+<div class="glass">
+<h2>Final Message</h2>
+<p>The distance between reality and a dream is action.</p>
+</div>
+</section>
+
+</div>
+
+<script>
+function hideAll(){
+document.querySelectorAll('.section,#site').forEach(e=>e.classList.add('hidden'));
+}
+function show(id){hideAll();document.getElementById(id).classList.remove('hidden');}
+function deny(){
+document.body.innerHTML='<div class="section"><h1>ACCESS DENIED</h1><p>Only Dreamers Needed.</p></div>';
+}
+function grant(){
+hideAll();
+document.getElementById('loading').classList.remove('hidden');
+let msgs=['Scanning dreams...','Checking ambition...','Analyzing conviction...','Dream confirmed...'];
+let i=0;
+let t=setInterval(()=>{
+i++;
+if(i<msgs.length) document.getElementById('scan').innerText=msgs[i];
+},1000);
+setTimeout(()=>{
+clearInterval(t);
+hideAll();
+document.getElementById('site').classList.remove('hidden');
+},4500);
+}
+
+const c=document.getElementById('particles');
+const ctx=c.getContext('2d');
+function resize(){c.width=innerWidth;c.height=innerHeight}
+resize(); addEventListener('resize',resize);
+let pts=[...Array(120)].map(()=>({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*2+1}));
+(function anim(){
+ctx.clearRect(0,0,c.width,c.height);
+ctx.fillStyle='white';
+pts.forEach(p=>{ctx.fillRect(p.x,p.y,p.r,p.r); p.y+=0.2; if(p.y>c.height)p.y=0;});
+requestAnimationFrame(anim);
+})();
+</script>
+</body>
+</html>
